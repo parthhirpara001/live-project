@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>first page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color:rgb(82, 84, 82);">
+    <h1>welcome to profile</h1>
+
+    <!--start navbar-->
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">about</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes">notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">profile</a>
+                    </li>
+                    
+                    
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    {% if user is none %}
+                    <button class="btn btn-outline-success" type="button">login</button>
+                    <button class="btn btn-outline-success" type="button">signup</button>
+                    {% else %}
+                    <div class="dropdown">
+                        <button class="btn btn-danger dropdown-toggle mx-2"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{user}}
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/profile">updet profile</a></li>
+                          <li><a class="dropdown-item" href="/">logout</a></li>
+                         
+                        </ul>
+                    </div>
+                    {% endif %}
+            </div>
+        </div>
+    </nav>
+    <!--end navbar-->
+   
+
+
+   
+    
+    {% if user is none %}
+    <center><h1>if u want to update ur profile, login first</h1></center>
+    {% else %}
+    <center><h1>this is profile page</h1></center>
+        <form method="post" class="row g-3 needs-validation" novalidate>
+        {% csrf_token %}
+
+
+        <div class="col-md-6">
+            <label for="validationCustom01" class="form-label">firstname</label>
+            <input type="text" value="{{cuser.firstname}}" name="firstname" class="form-control" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom02" class="form-label">lastname</label>
+            <input type="text" value="{{cuser.lastname}}" name="lastname" class="form-control" id="validationCustom02" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustomUsername" class="form-label">username</label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <input type="text" value="{{cuser.username}}" name="username" class="form-control" id="validationCustomUsername"
+                    aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustomUsername" class="form-label">password</label>
+            <div class="input-group has-validation">
+
+                <input type="password" value="{{cuser.password}}" name="password" class="form-control" id="validationCustomUsername"
+                    aria-describedby="inputGroupPrepend" required>
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustom03" class="form-label">city</label>
+            <input type="text" value="{{cuser.city}}" name="city" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+                Please provide a valid city.
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustom04" class="form-label">state</label>
+            <select name="state"  class="form-select" id="validationCustom04" required>
+                <option selected disabled value="">value="{{cuser.state}}"</option>
+                <option>gujarat</option>
+                <option>panjab</option>
+                <option>goa</option>
+                <option>other</option>
+            </select>
+            
+
+            <div class="invalid-feedback">
+                Please select a valid state.
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustomUsername" class="form-label">mobile</label>
+            <div  class="input-group has-validation">
+
+            <input type="number" value="{{cuser.mobile}}" name="mobile" class="form-control" id="validationCustomUsername"
+            aria-describedby="inputGroupPrepend" required>
+
+            </div>
+        </div>
+
+
+        <div class="col-15">
+            <button class="btn btn-primary" type="submit" name="signup" value="signup">signup</button>
+        </div>
+        </form>
+    {% endif %}    
+
+</body>
+
+</html>
